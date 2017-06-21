@@ -1,0 +1,12 @@
+platform :ios, '8.0'
+target 'RoutePath' do
+pod 'AFNetworking', '~> 3.0'
+
+pod 'AMapSearch'
+
+pod 'AMapLocation'
+
+pod 'AMapNavi'
+
+end
+
