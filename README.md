@@ -6,6 +6,7 @@
 ---- 
 `- (void) DrawLine{`
 `	CLLocationCoordinate2D coordinate;`
+
 `	CLLocation *location;`
 `	NSMutableArray * array = [NSMutableArray array];`
 `	for (int i = 0; i < self.locations.count; i++) {`
