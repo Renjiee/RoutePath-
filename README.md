@@ -5,25 +5,25 @@
 
 	-  (void) DrawLine{
 	
-	CLLocationCoordinate2D coordinate;
+		 CLLocationCoordinate2D coordinate;
 	
-	CLLocation *location;
+		 CLLocation *location;
 	
-	NSMutableArray * array = [NSMutableArray array];
+		 NSMutableArray * array = [NSMutableArray array];
 	
-	for (int i = 0; i < self.locations.count; i++) {
+		 for (int i = 0; i < self.locations.count; i++) {
 	
-	coordinate.latitude = [self.latitudes[i] floatValue];
+			 coordinate.latitude = [self.latitudes[i] floatValue];
 	
-	coordinate.longitude = [self.longitudes[i] floatValue];
+			 coordinate.longitude = [self.longitudes[i] floatValue];
 	
-	location = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+			 location = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 	
-	[self.tempTraceLocations addObject:location];
+			 [self.tempTraceLocations addObject:location];
 	
-	[array addObject:location];
+	                 [array addObject:location];
 	
-	}
+	            }
 	
 	}
 	
@@ -31,54 +31,54 @@
 	
 	{
 	
-	 if ([overlay isKindOfClass:[MAPolyline class]])
+	     if ([overlay isKindOfClass:[MAPolyline class]])
 	
-	{
+	         {
 	
-	 MAPolylineRenderer *polylineRenderer = [[MAPolylineRenderer alloc] initWithPolyline:overlay];
+	               MAPolylineRenderer *polylineRenderer = [[MAPolylineRenderer alloc] initWithPolyline:overlay];
 	
-	 polylineRenderer.lineWidth    = 4.0f;
+	                polylineRenderer.lineWidth    = 4.0f;
 	
-	 polylineRenderer.strokeColor  = KMainColor;
+			polylineRenderer.strokeColor  = KMainColor;
 	
-	 polylineRenderer.lineJoinType = kMALineJoinRound;
+		        polylineRenderer.lineJoinType = kMALineJoinRound;
 	
-	 polylineRenderer.lineCapType  = kMALineCapRound;
+	 	        polylineRenderer.lineCapType  = kMALineCapRound;
 	
-	 return polylineRenderer;
+	 	        return polylineRenderer;
 	
-	}
+	          }
 	
-	 return nil;
+	        return nil;
 	}
 ---- 
 	pragma mark -------------------- 轨迹纠偏 --------------------
 	-  (void)queryTraceWithLocations:(NSArray<CLLocation *> *)locations withSaving:(BOOL)saving
 	{
-	NSMutableArray *mArr = [NSMutableArray array];
-	for(CLLocation *loc in locations)
-	{
-	MATraceLocation *tLoc = [[MATraceLocation alloc] init];
-	tLoc.loc = loc.coordinate;
+		 NSMutableArray *mArr = [NSMutableArray array];
+		 for(CLLocation *loc in locations)
+		 {
+			 MATraceLocation *tLoc = [[MATraceLocation alloc] init];
+			 tLoc.loc = loc.coordinate;
 	
-	tLoc.speed = loc.speed * 3.6; //m/s  转 km/h
-	tLoc.time = [loc.timestamp timeIntervalSince1970] * 1000;
-	tLoc.angle = loc.course;
-	[mArr addObject:tLoc];
-	}
+			 tLoc.speed = loc.speed * 3.6; //m/s  转 km/h
+			 tLoc.time = [loc.timestamp timeIntervalSince1970] * 1000;
+			 tLoc.angle = loc.course;
+			 [mArr addObject:tLoc];
+		 }
 	
-	__weak typeof(self) weakSelf = self;
-	__unused NSOperation *op = [self.traceManager queryProcessedTraceWith:mArr type:-1 processingCallback:nil  finishCallback:^(NSArray<MATracePoint *> *points, double distance) {
+		 __weak typeof(self) weakSelf = self;
+		 __unused NSOperation *op = [self.traceManager queryProcessedTraceWith:mArr type:-1 processingCallback:nil  finishCallback:^(NSArray<MATracePoint *> *points, double distance) {
 	
-	NSLog(@"trace query done!");
-	[weakSelf addFullTrace:points];
+			 NSLog(@"trace query done!");
+			 [weakSelf addFullTrace:points];
 	
 	
-	} failedCallback:^(int errorCode, NSString *errorDesc) {
+		 } failedCallback:^(int errorCode, NSString *errorDesc) {
 	
 	NSLog(@"Error: %@", errorDesc);
 	//        weakSelf.queryOperation = nil;
-	}];
+		 }];
 	
 	}
 
